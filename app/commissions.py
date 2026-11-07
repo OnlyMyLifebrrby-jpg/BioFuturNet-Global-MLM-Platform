@@ -83,6 +83,7 @@ class CommissionEngine:
         while current and current.parent_id:
             parent = db.query(User).filter(User.id == current.parent_id).first()
             if not parent:
+                break
             
             # إذا تجاوزت النقاط الحد الأدنى للتوازن (مثلاً 100 نقطة في كل ساق)
             min_volume = min(parent.left_volume, parent.right_volume)
