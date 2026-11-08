@@ -10,14 +10,17 @@ from app.tree import TreeEngine
 from app.commissions import CommissionEngine
 from app.wallet import WalletEngine
 
-# إعداد قاعدة البيانات مع معايير الأمان والمرونة لتجاوز تأخير الشبكة (IPv4/Pooler)
+# إعداد قاعدة البيانات مع تفعيل SSL وإلزام الاتصال الآمن لتجاوز قيود شبكة Render
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:password@localhost:5432/biofn_db")
 
 engine = create_engine(
     DATABASE_URL,
-    pool_pre_ping=True,               # التحقق التلقائي من نشاط الاتصال لمنع انقطاعه
-    pool_recycle=300,                 # إعادة تدوير الاتصالات كل 5 دقائق
-    connect_args={"connect_timeout": 15} # مهلة زمنية إضافية للاتصال السحابي
+    pool_pre_ping=True,
+    pool_recycle=300,
+    connect_args={
+        "connect_timeout": 20,
+        "sslmode": "require"  # إجبار الاتصال الآمن لتجاوز عوائق الشبكة السحابية
+    }
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
