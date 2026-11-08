@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioFuturNet (BioFN) - Global MLM Platform</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- HTMX CDN للتحديث الفوري بدون إعادة تحميل -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+
+    <!-- شريط التنقل العلوي -->
+    <nav class="bg-slate-900 border-b border-slate-800 p-4 sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center font-extrabold text-xl text-slate-950 shadow-lg shadow-emerald-500/20">
+                    BF
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg tracking-wide bg-gradient-to-r from-emerald-400 to-teal-200 bg-clip-text text-transparent">
+                        BioFuturNet
+                    </h1>
+                    <span class="text-[11px] text-slate-400 block font-medium">1 BioFN = 500 DZD | Product-Based 100%</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <span class="bg-emerald-500/10 text-emerald-400 text-xs px-3 py-1.5 rounded-full border border-emerald-500/20 font-semibold flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    نظام قانوني وعالمي موثق
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
+
+        <!-- بطاقات الإحصائيات العلوية -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <!-- رصيد المحفظة -->
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-sm">
+                <span class="text-xs text-slate-400 font-semibold">رصيد BioFN الحالي</span>
+                <div class="mt-2">
+                    <h3 class="text-2xl font-extrabold text-emerald-400">1,250.00 <span class="text-xs text-slate-400">BioFN</span></h3>
+                </div>
+                <p class="text-xs text-slate-400 mt-2">ما يعادل: <strong class="text-slate-200">625,000 DZD</strong></p>
+            </div>
+
+            <!-- مبيعات المنتجات PV -->
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-sm">
+                <span class="text-xs text-slate-400 font-semibold">حجم المبيعات الشخصية (PV)</span>
+                <div class="mt-2">
+                    <h3 class="text-2xl font-extrabold text-teal-300">450 <span class="text-xs text-slate-400">PV</span></h3>
+                </div>
+                <p class="text-xs text-emerald-400 mt-2">مؤهل لاستلام كافة العمولات ✓</p>
+            </div>
+
+            <!-- توازن الأفرع الثنائية -->
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-sm">
+                <span class="text-xs text-slate-400 font-semibold">توازن الساقين (Binary)</span>
+                <div class="flex justify-between items-center mt-2">
+                    <span class="text-xs text-slate-300">يسار: <strong class="text-indigo-400">1,200 PV</strong></span>
+                    <span class="text-xs text-slate-300">يمين: <strong class="text-indigo-400">950 PV</strong></span>
+                </div>
+                <div class="w-full bg-slate-800 h-2 rounded-full mt-3 overflow-hidden">
+                    <div class="bg-indigo-500 h-full rounded-full" style="width: 79%"></div>
+                </div>
+            </div>
+
+            <!-- الرتبة الحالية -->
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-sm">
+                <span class="text-xs text-slate-400 font-semibold">الرتبة الحالية</span>
+                <div class="mt-2 flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-amber-400">Emerald Leader</h3>
+                    <span class="text-xl">💎</span>
+                </div>
+                <p class="text-xs text-slate-400 mt-2">مؤهل لـ Leadership Pool (2%)</p>
+            </div>
+        </div>
+
+        <!-- قسم المتجر والعمليات -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- متجر المنتجات (القاعدة الذهبية Product-Based) -->
+            <div class="lg:col-span-2 bg-slate-900/60 border border-slate-800 rounded-2xl p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-base font-bold text-slate-100">متجر المنتجات الحقيقية</h2>
+                        <p class="text-xs text-slate-400">تُولد العمولات حصرياً عند شراء منتج حقيقي لضمان القانونية العالمية</p>
+                    </div>
+                    <span class="text-[11px] bg-slate-800 text-slate-300 px-3 py-1 rounded-lg">Secured Engine</span>
+                </div>
+
+                <!-- نموذج الشراء التفاعلي عبر HTMX -->
+                <form hx-post="/api/shop/purchase" 
+                      hx-target="#purchase-result" 
+                      hx-swap="innerHTML"
+                      class="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">اختر المنتج</label>
+                            <select name="product_id" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                                <option value="1">حزمة المكملات الطبيعية BioNutri (100 BioFN / 50 PV)</option>
+                                <option value="2">مستخلص الأعشاب المتقدم BioExtra (250 BioFN / 125 PV)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">معرف المشتري (User ID)</label>
+                            <input type="number" name="user_id" value="1" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">الكمية</label>
+                            <input type="number" name="quantity" value="1" min="1" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3 rounded-xl transition duration-200 shadow-lg shadow-emerald-500/10 text-sm">
+                        إتمام شراء المنتج وتوزيع العمولات لحظياً
+                    </button>
+                </form>
+
+                <!-- عرض نتيجة الشراء الفورية -->
+                <div id="purchase-result" class="mt-4"></div>
+            </div>
+
+            <!-- لوحة التحكم الجانبية والشجرة -->
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 space-y-4">
+                <h2 class="text-base font-bold text-slate-100">إدارة الشبكة والأموال</h2>
+                
+                <!-- زر استعراض الشجرة -->
+                <button hx-get="/templates/tree_view.html" 
+                        hx-target="#tree-container" 
+                        hx-swap="innerHTML" 
+                        class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold p-3 rounded-xl text-right flex justify-between items-center border border-slate-700/60 text-xs transition">
+                    <span>عرض الشجرة الثنائية (Binary Tree)</span>
+                    <span>🌳</span>
+                </button>
+
+                <!-- نموذج تحويل الرصيد -->
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-3">
+                    <h3 class="text-xs font-bold text-slate-300">تحويل رصيد داخلي فوري</h3>
+                    <input type="text" placeholder="اسم المستخدم المستلم" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
+                    <input type="number" placeholder="المبلغ (BioFN)" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
+                    <button class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold py-2.5 rounded-lg transition">
+                        إرسال الرصيد الآن
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- حاوية عرض الشجرة التفاعلية عند الطلب -->
+        <div id="tree-container" class="w-full"></div>
+
+    </main>
+
+</body>
+</html>

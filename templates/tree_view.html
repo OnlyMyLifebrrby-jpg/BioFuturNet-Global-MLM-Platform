@@ -1,0 +1,47 @@
+<div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 mt-6 shadow-xl animate-fade-in">
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h3 class="text-sm font-bold text-slate-100">الشجرة الثنائية التفاعلية (Binary Network)</h3>
+            <p class="text-xs text-slate-400">تتبع الأفرع وتراكم النقاط اليمينية واليسارية لحظياً</p>
+        </div>
+        <button onclick="document.getElementById('tree-container').innerHTML=''" class="text-xs text-slate-400 hover:text-slate-200 bg-slate-800 px-2.5 py-1 rounded-lg">إغلاق ✕</button>
+    </div>
+
+    <!-- رسم شجري تفاعلي -->
+    <div class="flex flex-col items-center justify-center space-y-6 py-4 overflow-x-auto">
+        
+        <!-- العضو الرئيسي (Root) -->
+        <div class="bg-gradient-to-b from-emerald-600 to-emerald-800 text-white p-3.5 rounded-xl border border-emerald-400 shadow-lg text-center w-48">
+            <div class="text-[10px] opacity-75">أنت (Root)</div>
+            <div class="font-bold text-xs mt-0.5">@dr_bourroubey</div>
+            <div class="text-[10px] bg-emerald-950/60 rounded mt-2 py-1 px-2 flex justify-between font-mono">
+                <span>L: 1200</span>
+                <span>R: 950</span>
+            </div>
+        </div>
+
+        <!-- خطوط الوصل -->
+        <div class="w-56 h-0.5 bg-slate-700 relative">
+            <div class="absolute left-0 -top-3 w-0.5 h-3 bg-slate-700"></div>
+            <div class="absolute right-0 -top-3 w-0.5 h-3 bg-slate-700"></div>
+        </div>
+
+        <!-- الأبناء (اليسار واليمين) -->
+        <div class="flex justify-between w-full max-w-md gap-4">
+            <!-- الساق اليسرى -->
+            <div class="bg-slate-950 border border-indigo-500/40 p-3 rounded-xl text-center flex-1 shadow">
+                <span class="text-[10px] text-indigo-400 font-bold block">الساق اليسرى (Left)</span>
+                <div class="font-bold text-xs text-slate-200 mt-1">@member_left</div>
+                <div class="text-[10px] text-slate-400 mt-1">Volume: 600 PV</div>
+            </div>
+
+            <!-- الساق اليمنى -->
+            <div class="bg-slate-950 border border-indigo-500/40 p-3 rounded-xl text-center flex-1 shadow">
+                <span class="text-[10px] text-indigo-400 font-bold block">الساق اليمنى (Right)</span>
+                <div class="font-bold text-xs text-slate-200 mt-1">@member_right</div>
+                <div class="text-[10px] text-slate-400 mt-1">Volume: 450 PV</div>
+            </div>
+        </div>
+
+    </div>
+</div>
