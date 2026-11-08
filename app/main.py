@@ -47,6 +47,25 @@ def get_db():
     finally:
         db.close()
 
+# --- نقطة تهيئة قاعدة البيانات والمنتجات (لحل أخطاء الجدول الفارغ فوراً) ---
+@app.get("/api/init-db")
+def initialize_database(db: Session = Depends(get_db)):
+    """إنشاء الجداول وإدخال المنتجات الأولية لتشغيل المتجر فوراً"""
+    try:
+        Base.metadata.create_all(bind=engine)
+        
+        # التحقق من وجود منتجات، وإلا إضافة منتج افتراضي
+        existing_product = db.query(Product).first()
+        if not existing_product:
+            p1 = Product(name="حزمة المكملات الطبيعية BioNutri", price_biofn=100.0, pv_value=50.0, is_active=True)
+            p2 = Product(name="مستخلص الأعشاب المتقدم BioExtra", price_biofn=250.0, pv_value=125.0, is_active=True)
+            db.add_all([p1, p2])
+            db.commit()
+            
+        return {"status": "success", "message": "تم تهيئة قاعدة البيانات والمنتجات الافتراضية بنجاح تام!"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
 # --- واجهات المستخدم (HTML / Templates) ---
 @app.get("/", include_in_schema=False)
 def serve_dashboard(request: Request):
