@@ -10,10 +10,16 @@ from app.tree import TreeEngine
 from app.commissions import CommissionEngine
 from app.wallet import WalletEngine
 
-# إعداد قاعدة البيانات عبر متغير البيئة DATABASE_URL في Render
+# إعداد قاعدة البيانات مع معايير الأمان والمرونة لتجاوز تأخير الشبكة (IPv4/Pooler)
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:password@localhost:5432/biofn_db")
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,               # التحقق التلقائي من نشاط الاتصال لمنع انقطاعه
+    pool_recycle=300,                 # إعادة تدوير الاتصالات كل 5 دقائق
+    connect_args={"connect_timeout": 15} # مهلة زمنية إضافية للاتصال السحابي
+)
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 app = FastAPI(
@@ -25,10 +31,14 @@ app = FastAPI(
 # إعداد قوالب HTML ومجلد templates
 templates = Jinja2Templates(directory="templates")
 
-# إنشاء الجداول تلقائياً عند الإقلاع الأول
+# إنشاء الجداول تلقائياً عند الإقلاع مع معالجة الاستثناءات لضمان عدم توقف الخادم
 @app.on_event("startup")
 def startup_event():
-    Base.metadata.create_all(bind=engine)
+    try:
+        Base.metadata.create_all(bind=engine)
+        print("🚀 تم الاتصال بقاعدة البيانات بنجاح وانطلاق المنصة أونلاين.")
+    except Exception as e:
+        print(f"⚠️ تنبيه إقلاع قاعدة البيانات: {e}")
 
 def get_db():
     db = SessionLocal()
