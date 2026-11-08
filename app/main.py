@@ -2,7 +2,7 @@
 from fastapi import FastAPI, Depends, HTTPException, Request
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
 import os
 
 from app.models import Base, User, Product, Order, OrderItem, Wallet, Transaction, OrderStatus
@@ -10,7 +10,7 @@ from app.tree import TreeEngine
 from app.commissions import CommissionEngine
 from app.wallet import WalletEngine
 
-# إعداد قاعدة البيانات (Supabase PostgreSQL أو محلية)
+# إعداد قاعدة البيانات عبر متغير البيئة DATABASE_URL في Render
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:password@localhost:5432/biofn_db")
 
 engine = create_engine(DATABASE_URL)
@@ -113,7 +113,7 @@ def get_wallet_summary(user_id: int = 1, db: Session = Depends(get_db)):
 @app.get("/api/admin/stats")
 def get_admin_stats(db: Session = Depends(get_db)):
     """
-    إحصائيات حية وشاملة لمدير المنصة (المستخدمين، إجمالي المبيعات، الطلبات المعلقة)
+    إحصائيات حية وشاملة لمدير المنصة
     """
     total_users = db.query(User).count()
     total_orders = db.query(Order).count()
@@ -131,7 +131,7 @@ def get_admin_stats(db: Session = Depends(get_db)):
 @app.post("/api/admin/approve-withdrawal")
 def approve_withdrawal(transaction_id: int, db: Session = Depends(get_db)):
     """
-    موافقة المدير على طلب السحب المالي وصرفه فوراً
+    موافقة المدير على طلب السحب المالي
     """
     tx = db.query(Transaction).filter(Transaction.id == transaction_id).first()
     if not tx:
@@ -142,7 +142,7 @@ def approve_withdrawal(transaction_id: int, db: Session = Depends(get_db)):
     return {"status": "success", "message": f"تمت الموافقة على طلب السحب برقم {transaction_id} بنجاح."}
 
 
-# نقطة اختبار تشغيل الخادم والتحقق من الحقوق
+# نقطة اختبار تشغيل الخادم
 @app.get("/api/status")
 def read_root():
     return {
