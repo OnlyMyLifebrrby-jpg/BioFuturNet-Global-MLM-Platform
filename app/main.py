@@ -57,7 +57,6 @@ def initialize_database(db: Session = Depends(get_db)):
     try:
         Base.metadata.create_all(bind=engine)
         
-        # التحقق من وجود منتجات، وإلا إضافة منتج افتراضي
         existing_product = db.query(Product).first()
         if not existing_product:
             p1 = Product(name="حزمة المكملات الطبيعية BioNutri", price_biofn=100.0, pv_value=50.0, is_active=True)
@@ -72,13 +71,13 @@ def initialize_database(db: Session = Depends(get_db)):
 # --- واجهات المستخدم (HTML / Templates) ---
 @app.get("/", include_in_schema=False)
 def serve_dashboard(request: Request):
-    """عرض اللوحة الرئيسية للمنصة"""
-    return templates.TemplateResponse("index.html", {"request": request})
+    """عرض اللوحة الرئيسية للمنصة مع تمرير كائن الطلب الصحيح لـ Starlette"""
+    return templates.TemplateResponse(request, "index.html", {})
 
 @app.get("/templates/tree_view.html", include_in_schema=False)
 def serve_tree_view(request: Request):
     """عرض الشجرة التفاعلية عند طلب HTMX"""
-    return templates.TemplateResponse("tree_view.html", {"request": request})
+    return templates.TemplateResponse(request, "tree_view.html", {})
 
 
 # --- SYSTEM C: المتجر وشراء المنتجات الحقيقية ---
@@ -98,7 +97,6 @@ def purchase_product(user_id: int, product_id: int, quantity: int = 1, db: Sessi
     total_price = product.price_biofn * quantity
     total_pv = product.pv_value * quantity
 
-    # إنشاء طلب الشراء
     new_order = Order(
         user_id=user.id,
         total_amount=total_price,
@@ -109,7 +107,6 @@ def purchase_product(user_id: int, product_id: int, quantity: int = 1, db: Sessi
     db.commit()
     db.refresh(new_order)
 
-    # إضافة عنصر الطلب
     order_item = OrderItem(
         order_id=new_order.id,
         product_id=product.id,
@@ -120,7 +117,6 @@ def purchase_product(user_id: int, product_id: int, quantity: int = 1, db: Sessi
     db.add(order_item)
     db.commit()
 
-    # تشغيل محرك العمولات فوراً وبأجزاء من الثانية
     commission_result = CommissionEngine.calculate_order_commissions(db, new_order.id)
 
     return {
@@ -135,18 +131,12 @@ def purchase_product(user_id: int, product_id: int, quantity: int = 1, db: Sessi
 # --- SYSTEM E: المحفظة المالية ---
 @app.get("/api/wallet/summary")
 def get_wallet_summary(user_id: int = 1, db: Session = Depends(get_db)):
-    """
-    استعلام سريع عن أرصدة المحفظة
-    """
     return WalletEngine.get_wallet_balance(db, user_id)
 
 
 # --- SYSTEM G: لوحة تحكم المدير (Admin Dashboard) ---
 @app.get("/api/admin/stats")
 def get_admin_stats(db: Session = Depends(get_db)):
-    """
-    إحصائيات حية وشاملة لمدير المنصة
-    """
     total_users = db.query(User).count()
     total_orders = db.query(Order).count()
     pending_withdrawals = db.query(Transaction).filter(Transaction.tx_type.like("withdrawal_%"), Transaction.status == "pending").count()
@@ -162,9 +152,6 @@ def get_admin_stats(db: Session = Depends(get_db)):
 
 @app.post("/api/admin/approve-withdrawal")
 def approve_withdrawal(transaction_id: int, db: Session = Depends(get_db)):
-    """
-    موافقة المدير على طلب السحب المالي
-    """
     tx = db.query(Transaction).filter(Transaction.id == transaction_id).first()
     if not tx:
         raise HTTPException(status_code=404, detail="معاملة السحب غير موجودة.")
@@ -174,7 +161,6 @@ def approve_withdrawal(transaction_id: int, db: Session = Depends(get_db)):
     return {"status": "success", "message": f"تمت الموافقة على طلب السحب برقم {transaction_id} بنجاح."}
 
 
-# نقطة اختبار تشغيل الخادم
 @app.get("/api/status")
 def read_root():
     return {
